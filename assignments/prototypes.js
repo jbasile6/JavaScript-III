@@ -52,6 +52,14 @@ CharacterStats.prototype.takeDamage = function () {
   return `${this.name} took damage.`
 }
 
+CharacterStats.prototype.die = function() {
+  if(this.healthPoints <= 0) {
+    return console.log(this.destroy());
+  }
+}
+
+
+
 /*
   === Humanoid (Having an appearance or character resembling that of a human.) ===
   * team
@@ -75,14 +83,26 @@ Humanoid.prototype = Object.create(CharacterStats.prototype);
 
 //humanoid Methods--below inheritance
 Humanoid.prototype.greet = function() {
-  return `${this.name} offers a getting in ${this.language}.`
+  return `${this.name} offers a getting in ${this.language}.`;
 }
+//added method to humanoids, if health <= 0, destroy function is logged in console.
+
  
 /*
   * Inheritance chain: GameObject -> CharacterStats -> Humanoid
   * Instances of Humanoid should have all of the same properties as CharacterStats and GameObject.
   * Instances of CharacterStats should have all of the same properties as GameObject.
 */
+
+
+  // Stretch task: 
+  // * Create Villain and Hero constructor functions that inherit from the Humanoid constructor function.  
+
+  // * Give the Hero and Villains different methods that could be used to remove health points from objects
+  // which could result in destruction if health gets to 0 or drops below 0;
+
+  // * Create two new objects, one a villain and one a hero and fight it out with methods!
+
 
 // Test you work by un-commenting these 3 objects and the list of console logs below:
 
@@ -137,6 +157,71 @@ Humanoid.prototype.greet = function() {
     language: 'Elvish',
   });
 
+  //villain object
+  const villain = new Humanoid({
+    createdAt: new Date(),
+    dimensions: {
+      length: 10,
+      width: 15,
+      height: 20,
+    },
+    healthPoints: 100,
+    name: 'JS III',
+    team: 'E.V.I.L. - Every Villian Is Lemons',
+    weapons: [
+      'Confusion Staff'
+    ],
+    language: 'JavaScript'
+  });
+
+  //hero object
+  const hero = new Humanoid({
+    createdAt: new Date(),
+    dimensions: {
+      length: 7,
+      width: 12,
+      height: 18,
+    },
+    healthPoints: 75,
+    name: 'James',
+    team: 'Lambda Web17',
+    weapons: [
+      'Training Kit',
+      'Google',
+      'Web17HelpChannel'
+    ],
+    language: 'English'
+  });
+
+//villain constructor
+function Villain(villainProps) {
+  Humanoid.call(this, villainProps);
+}
+
+Villain.prototype = Object.create(Humanoid.prototype);
+
+//villain methods---inheritance^^^^
+Villain.prototype.confustionAttack = function() {
+  hero.healthPoints -= 30;
+  return `The Villain, ${this.name} attacks with ${this.weapons[0]}!`;
+}
+
+//hero constructor
+function Hero(heroProps) {
+  Humanoid.call(this, heroProps);
+}
+
+Hero.prototype = Object.create(Humanoid.prototype);
+
+//hero methods---inheritance^^^^
+Hero.prototype.learnAttack = function() {
+  villain.healthPoints -= 24;
+  return `The Hero, ${this.name} attacks with ${this.weapons[0]}!`
+}
+
+
+
+
   console.log(mage.createdAt); // Today's date
   console.log(archer.dimensions); // { length: 1, width: 2, height: 4 }
   console.log(swordsman.healthPoints); // 15
@@ -147,7 +232,8 @@ Humanoid.prototype.greet = function() {
   console.log(archer.greet()); // Lilith offers a greeting in Elvish.
   console.log(mage.takeDamage()); // Bruce took damage.
   console.log(swordsman.destroy()); // Sir Mustachio was removed from the game.
-
+  console.log(villain.weapons);
+  console.log(hero.weapons);
 
   // Stretch task: 
   // * Create Villain and Hero constructor functions that inherit from the Humanoid constructor function.  
