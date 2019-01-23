@@ -67,9 +67,16 @@ function Humanoid(humanoidProps) {
   this.team = humanoidProps.team;
   this.weapons = humanoidProps.weapons;
   this.language = humanoidProps.language;
+  CharacterStats.call(this, humanoidProps);
 }
 
-//humanoid Methods
+//charStats has already inheritted GameObjects
+Humanoid.prototype = Object.create(CharacterStats.prototype);
+
+//humanoid Methods--below inheritance
+Humanoid.prototype.greet = function() {
+  return `${this.name} offers a getting in ${this.language}.`
+}
  
 /*
   * Inheritance chain: GameObject -> CharacterStats -> Humanoid
@@ -79,7 +86,7 @@ function Humanoid(humanoidProps) {
 
 // Test you work by un-commenting these 3 objects and the list of console logs below:
 
-/*
+
   const mage = new Humanoid({
     createdAt: new Date(),
     dimensions: {
@@ -140,7 +147,7 @@ function Humanoid(humanoidProps) {
   console.log(archer.greet()); // Lilith offers a greeting in Elvish.
   console.log(mage.takeDamage()); // Bruce took damage.
   console.log(swordsman.destroy()); // Sir Mustachio was removed from the game.
-*/
+
 
   // Stretch task: 
   // * Create Villain and Hero constructor functions that inherit from the Humanoid constructor function.  
