@@ -39,7 +39,7 @@ GameObject.prototype.destroy = function() {
 */
 //CharacterStats constructor
 function CharacterStats(characterStatsProps) {
-  this.healthpoints= characterStatsProps.healthpoints;
+  this.healthPoints= characterStatsProps.healthPoints;
   this.name = characterStatsProps.name;
   GameObject.call(this, characterStatsProps);
 }
